@@ -1,11 +1,14 @@
 const express = require('express')
 const { createProxyMiddleware } = require('http-proxy-middleware')
+const cors = require('cors');
 
 const app = express()
 const port = 9000
 
+app.use(cors())
+
 app.use('/', createProxyMiddleware({
-  target: 'https://api.openai.com', 
+  target: 'https://yourappname.metered.live', 
   changeOrigin: true,
   on: {
     proxyReq: (proxyReq, req, res) => {
