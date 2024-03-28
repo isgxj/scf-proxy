@@ -8,8 +8,15 @@ const port = 9000
 app.use(cors())
 
 app.use('/', createProxyMiddleware({
-  target: 'https://yourappname.metered.live',
+  target: 'https://api.openai.com',
   changeOrigin: true,
+  headers: {
+    'X-Forwarded-For': '',
+    'Via': '',
+    'X-Real-IP': '',
+    'X-Forwarded-Host': '',
+    // 'Accept-Encoding': '',
+  },
   on: {
     proxyReq: (proxyReq, req, res) => {
       console.log(+new Date())
