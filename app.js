@@ -10,27 +10,17 @@ app.use(cors())
 app.use('/', createProxyMiddleware({
   target: 'https://api.openai.com',
   changeOrigin: true,
-  headers: {
-    'X-Forwarded-For': '',
-    'Via': '',
-    'X-Real-IP': '',
-    'X-Forwarded-Host': '',
-    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.16(0x1800103e) NetType/WIFI Language/en-us',
-    // 'Accept-Encoding': '',
-  },
-  on: {
-    proxyReq: (proxyReq, req, res) => {
-      console.log(+new Date())
-    },
-    proxyRes: (proxyRes, req, res) => {
-      console.log(+new Date())
-    },
-    error: (err, req, res) => {
-      /* handle error */
-    },
+  onProxyReq: (proxyReq, req, res) => {
+    proxyReq.removeHeader('X-Forwarded-For')
+    proxyReq.removeHeader('Via')
+    proxyReq.removeHeader('X-Real-IP')
+    proxyReq.removeHeader('X-Forwarded-Host')
+    proxyReq.setHeader('User-Agent', 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.16(0x1800103e) NetType/WIFI Language/en-us')
+    console.log(new Date())
   },
 }));
 
 app.listen(port, () => {
-  console.log(`启动成功，端口：${port}`)
+  const host = 'localhost'
+  console.log(`启动成功：http://${host}:${port}`)
 })
