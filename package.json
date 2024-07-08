@@ -4,8 +4,8 @@
   "description": "",
   "main": "sls.js",
   "scripts": {
-    "start": "node ./app.js",
-    "dev": "NODE_ENV=development node app.js"
+    "start": "bun app.js",
+    "dev": "NODE_ENV=development bun app.js"
   },
   "author": "yugasun",
   "license": "MIT",
